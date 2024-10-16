@@ -13,8 +13,8 @@ from dataclasses import dataclass  # For creating data classes
 #Import components for data transformation and model training
 from src.components.data_transformation import DataTransformation  # Data transformation class
 from src.components.data_transformation import DataTransformationConfig  # Configuration for data transformation
-#from src.components.model_trainer import ModelTrainerConfig  # Configuration for model training
-#from src.components.model_trainer import ModelTrainer  # Model training class
+from src.components.model_trainer import ModelTrainerConfig  # Configuration for model training
+from src.components.model_trainer import ModelTrainer  # Model training class
 
 # Define a data class for Data Ingestion Configuration
 @dataclass
@@ -75,6 +75,6 @@ if __name__ == "__main__":
     train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
 
     # Create an instance of ModelTrainer
-    #modeltrainer = ModelTrainer()
+    modeltrainer = ModelTrainer()
     # Train the model and print the result
-    #print(modeltrainer.initiate_model_trainer(train_arr, test_arr))
+    print(modeltrainer.initiate_model_trainer(train_arr, test_arr))
