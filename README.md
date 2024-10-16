@@ -1,5 +1,5 @@
 ---
-title: Chat with MySQL
+title: Student-Exam-Performance-Prediction
 emoji: 💬
 colorFrom: purple
 colorTo: blue
