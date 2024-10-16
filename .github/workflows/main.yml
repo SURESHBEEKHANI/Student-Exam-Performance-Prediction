@@ -19,7 +19,6 @@ jobs:
 
       # Display some debug information
       - name: Debug Info
-        run: echo "Current branch: ${{ github.ref_name }}"
 
       # Set up Git to use Hugging Face credentials
       - name: Set up Git Config
