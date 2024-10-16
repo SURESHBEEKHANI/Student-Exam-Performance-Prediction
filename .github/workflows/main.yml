@@ -1,22 +1,36 @@
-name: Sync to Hugging Face hub
+name: Sync to Hugging Face Hub
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      # Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-          lfs: true
+          fetch-depth: 0   # Fetch all history to push everything to Hugging Face
+          lfs: true        # Ensure LFS files are also fetched
+
+      # Display some debug information
       - name: Debug Info
+        run: echo "Current branch: ${{ github.ref_name }}"
+
+      # Set up Git to use Hugging Face credentials
+      - name: Set up Git Config
         run: |
-          echo "Current branch: $GITHUB_REF"
-      - name: Push to hub
+          git config --global user.email "sureshbeekhani26@gmail.com"   # Replace with your email
+          git config --global user.name "suresh beekhani"          # Replace with your name
+
+      # Push to Hugging Face Hub
+      - name: Push to Hugging Face Hub
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push --force git@hf.co:spaces/SURESHBEEKHANI/StudentExamerformancePrediction main
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}  # Ensure the token is stored as a GitHub secret
+        run: |
+          git remote add hf "https://huggingface.co/spaces/SURESHBEEKHANI/StudentExamerformancePrediction"
+          git push --force hf main
