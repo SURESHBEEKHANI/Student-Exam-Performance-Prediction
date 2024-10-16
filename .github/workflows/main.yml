@@ -19,4 +19,4 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push --force https://huggingface.co/spaces/SURESHBEEKHANI/StudentExamerformancePrediction main
+        run: git push --force https://huggingface.co/${{ secrets.HF_TOKEN }}@huggingface.co/spaces/SURESHBEEKHANI/StudentExamerformancePrediction main
