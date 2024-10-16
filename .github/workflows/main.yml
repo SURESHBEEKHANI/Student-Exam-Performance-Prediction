@@ -1,5 +1,4 @@
 name: Push to Hugging Face
-
 on:
   push:
     branches:
@@ -8,24 +7,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-
     - name: Install Git
       run: sudo apt-get install git
-
     - name: Configure Git
       run: |
-        git config --global user.name 'Your Name'
-        git config --global user.email 'your-email@example.com'
-
+        git config --global user.name 'sureshbeekhani'
+        git config --global user.email 'sureshbeeekhani26@gmail.com'
     - name: Push to Hugging Face
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
