@@ -10,9 +10,9 @@ import pandas as pd  # For data manipulation and analysis
 from sklearn.model_selection import train_test_split  # For splitting data into training and testing sets
 from dataclasses import dataclass  # For creating data classes
 
-# Import components for data transformation and model training
-#from src.components.data_transformation import DataTransformation  # Data transformation class
-#from src.components.data_transformation import DataTransformationConfig  # Configuration for data transformation
+#Import components for data transformation and model training
+from src.components.data_transformation import DataTransformation  # Data transformation class
+from src.components.data_transformation import DataTransformationConfig  # Configuration for data transformation
 #from src.components.model_trainer import ModelTrainerConfig  # Configuration for model training
 #from src.components.model_trainer import ModelTrainer  # Model training class
 
@@ -70,9 +70,9 @@ if __name__ == "__main__":
     train_data, test_data = obj.initiate_data_ingestion()
 
     # Create an instance of DataTransformation
-   # data_transformation = DataTransformation()
+    data_transformation = DataTransformation()
     # Perform data transformation and obtain training and testing arrays
-    #train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
 
     # Create an instance of ModelTrainer
     #modeltrainer = ModelTrainer()
