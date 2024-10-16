@@ -1,21 +1,34 @@
-name: Sync to Hugging Face hub
+name: Push to Hugging Face
+
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main  # You can change this to your target branch
 
 jobs:
-  sync-to-hub:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          lfs: true
-      - name: Debug Info
-        run: |
-          echo "Current branch: $GITHUB_REF"
-      - name: Push to hub
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push --force https://huggingface.co/spaces/SURESHBEEKHANI/StudentExamerformancePrediction 
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Git
+      run: sudo apt-get install git
+
+    - name: Configure Git
+      run: |
+        git config --global user.name 'Your Name'
+        git config --global user.email 'your-email@example.com'
+
+    - name: Push to Hugging Face
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      run: |
+        git remote set-url origin https://${{ secrets.HF_TOKEN }}@huggingface.co/spaces/SURESHBEEKHANI/StudentExamerformancePrediction
+        git push --force
