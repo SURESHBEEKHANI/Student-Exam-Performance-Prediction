@@ -15,7 +15,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     # Rendering the 'index.html' template when the root URL is accessed
-    return render_template('index.html')
+    return render_template('home.html')
 
 # Defining the route for prediction, with both GET and POST methods allowed
 @app.route('/predictdata', methods=['GET', 'POST'])
