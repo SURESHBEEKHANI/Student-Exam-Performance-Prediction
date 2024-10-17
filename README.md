@@ -20,20 +20,3 @@ The **Student Exam Performance Prediction** project is a machine learning applic
 ## How it Works
 
 The model takes into account the demographic and academic factors to predict the math score. The trained model uses historical student performance data to provide a reasonable prediction based on the user's input.
-
-
-To run this project locally, follow these steps:
-
-### Prerequisites
-
-- Python 3.12
-- Flask (for serving the web app)
-- Scikit-learn (for machine learning)
-- Pandas and NumPy (for data manipulation)
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/student-exam-performance-prediction.git
