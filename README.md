@@ -59,7 +59,7 @@ The categorical variables **Gender**, **Race/Ethnicity**, and **Parental Level o
 - [Deployment App]https://sureshbeekhani-studentexamperformanceprediction.hf.space/)
 
 ## Screenshot of UI
-![API Prediction](./Screenshots/Prediction.jpg)
+![API Prediction](./templates/Prediction.jpg)
 
 ## YouTube Video
 Link for YouTube Video: Click the thumbnail to open.
