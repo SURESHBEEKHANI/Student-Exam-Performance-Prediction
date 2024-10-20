@@ -1,34 +1,59 @@
 # Student Exam Performance Prediction
 
-# Gemstone Price Prediction
+## Project Overview
 
-## Introduction
+The **Student Exam Performance Prediction** project is a machine learning application designed to predict a student's math score based on various input factors such as gender, race, parental education, lunch type, and scores in other subjects (writing and reading). The tool provides an estimate of the student's math score based on these factors.
 
-The goal of this project is to predict the price of diamonds using regression analysis. The dataset includes various features that contribute to the diamond's price, allowing us to build a predictive model.
+## Dataset Information
 
-### Dataset
+The dataset consists of the following features:
 
-The dataset contains 10 independent variables (including `id`), with the following features:
-
-- **`id`**: Unique identifier for each diamond.
-- **`carat`**: Weight measurement of the diamond (in carats).
-- **`cut`**: Quality of the diamond cut.
-- **`color`**: Color grade of the diamond.
-- **`clarity`**: Measure of the diamond's purity and rarity, graded by visibility of characteristics under 10x magnification.
-- **`depth`**: Height of the diamond measured from the culet (bottom tip) to the table (top surface).
-- **`table`**: Facet that can be seen when the diamond is viewed face up.
-- **`x`**: X dimension of the diamond.
-- **`y`**: Y dimension of the diamond.
-- **`z`**: Z dimension of the diamond.
-
+- **gender**: Sex of students (Male/Female)
+- **race/ethnicity**: Ethnicity of students (Group A, B, C, D, E)
+- **parental level of education**: Parents' final education (Bachelor's degree, Some college, Master's degree, Associate's degree, High school, Some high school)
+- **lunch**: Type of lunch before the test (Standard or Free/Reduced)
+- **test preparation course**: Completion status of the test preparation course (Completed or Not completed)
+- **math score**: Score in math (out of 100)
+- **reading score**: Score in reading (out of 100)
+- **writing score**: Score in writing (out of 100)
+- 
 **Target Variable**:
-- **`price`**: Price of the given diamond.
+- **`math scor`**: Price of the given diamond.
 
 ### Dataset Source
 [Dataset Link](https://www.kaggle.com/competitions/playground-series-s3e8/data?select=train.csv)
 
-### Categorical Variables
-The categorical variables `cut`, `color`, and `clarity` are ordinal in nature.
+# Categorical Variables
+
+The categorical variables **Gender**, **Race/Ethnicity**, and **Parental Level of Education** are ordinal in nature.
+
+- **Gender**:
+  - Male
+  - Female
+
+- **Race/Ethnicity**:
+  - Group A
+  - Group B
+  - Group C
+  - Group D
+  - Group E
+
+- **Parental Level of Education** (Ordinal):
+  - High school
+  - Some high school
+  - Associate's degree
+  - Some college
+  - Bachelor's degree
+  - Master's degree
+
+- **Lunch**:
+  - Standard
+  - Free/Reduced
+
+- **Test Preparation Course**:
+  - Completed
+  - None
+
 
 ## Deployment Link
 - [Deployment App]https://sureshbeekhani-studentexamperformanceprediction.hf.space/)
@@ -70,6 +95,6 @@ Link for YouTube Video: Click the thumbnail to open.
    - Develop a Flask app with a user interface for predicting gemstone prices.
 
 ## Additional Resources
-- **Exploratory Data Analysis Notebook**: [EDA Notebook](./notebook/1 . EDA STUDENT PERFORMANCE .ipynb)
+- **Exploratory Data Analysis Notebook**: [EDA Notebook](./notebook/1.EDA STUDENT PERFORMANCE .ipynb)
 - **Model Training Approach Notebook**: [Model Training Notebook](./notebook/2_Model_Training_Gemstone.ipynb)
 - **Model Interpretation with LIME**: [LIME Interpretation](./notebook/3_Explainability_with_LIME.ipynb)
