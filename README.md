@@ -93,9 +93,10 @@ Link for YouTube Video: Click the thumbnail to open.
 
 5. **Flask App Creation**:
    - Develop a Flask app with a user interface for predicting gemstone prices.
-   - 
+
 ## Additional Resources
-- **Exploratory Data Analysis (EDA) Notebook**: [Access EDA Notebook](./notebook/1.EDA%20STUDENT%20PERFORMANCE.ipynb)
-- **Model Training Notebook**: [Access Model Training Notebook](./notebook/2.%20MODEL%20TRAINING.ipynb)
+- **Exploratory Data Analysis (EDA) Notebook**: [Access EDA Notebook](./notebook/1_EDA_STUDENT_PERFORMANCE.ipynb)
+- **Model Training Notebook**: [Access Model Training Notebook](./notebook/2_MODEL_TRAINING.ipynb)
+
 
 
