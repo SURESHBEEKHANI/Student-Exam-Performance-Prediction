@@ -1,62 +1,61 @@
-# Student Exam Performance Prediction
+# Heart Attack Prediction
 
 ## Project Overview
 
-The **Student Exam Performance Prediction** project is a machine learning application designed to predict a student's math score based on various input factors such as gender, race, parental education, lunch type, and scores in other subjects (writing and reading). The tool provides an estimate of the student's math score based on these factors.
+The **Heart Attack Prediction** project is a machine learning application designed to predict the risk of heart attack based on various input factors. The tool estimates the risk using medical data such as age, sex, blood pressure, cholesterol levels, and other cardiovascular metrics.
 
 ## Dataset Information
 
 The dataset consists of the following features:
 
-- **gender**: Sex of students (Male/Female)
-- **race/ethnicity**: Ethnicity of students (Group A, B, C, D, E)
-- **parental level of education**: Parents' final education (Bachelor's degree, Some college, Master's degree, Associate's degree, High school, Some high school)
-- **lunch**: Type of lunch before the test (Standard or Free/Reduced)
-- **test preparation course**: Completion status of the test preparation course (Completed or Not completed)
-- **math score**: Score in math (out of 100)
-- **reading score**: Score in reading (out of 100)
-- **writing score**: Score in writing (out of 100)
-- 
+- **Sex**: Gender of the patient (Male/Female)
+- **Chest Pain Type**: Type of chest pain experienced (ATA, NAP, ASY, TA)
+- **Resting ECG**: Results of resting electrocardiographic measurements (Normal, ST, LVH)
+- **Exercise Angina**: Whether the patient experiences angina during exercise (Yes/No)
+- **ST Slope**: Slope of the peak exercise ST segment (Up, Flat, Down)
+- **Age**: Age of the patient (in years)
+- **Resting Blood Pressure**: Blood pressure (in mm Hg) at rest
+- **Cholesterol**: Cholesterol level (in mg/dl)
+- **Fasting Blood Sugar**: Blood sugar level (in mg/dl) after fasting
+- **Max Heart Rate**: Maximum heart rate achieved
+- **Oldpeak**: ST depression induced by exercise relative to rest
+
 **Target Variable**:
-- **`math scor`**: Price of the given diamond.
+- **`Risk of Heart Attack`**: A binary indicator of heart attack risk.
 
 ### Dataset Source
-[Dataset Link](https://www.kaggle.com/competitions/playground-series-s3e8/data?select=train.csv)
+[Dataset Link](https://www.kaggle.com/datasets/your-dataset-link-here)
 
-# Categorical Variables
+## Categorical Variables
 
-The categorical variables **Gender**, **Race/Ethnicity**, and **Parental Level of Education** are ordinal in nature.
+The categorical variables **Sex**, **Chest Pain Type**, **Resting ECG**, **Exercise Angina**, and **ST Slope** are essential for prediction.
 
-- **Gender**:
+- **Sex**:
   - Male
   - Female
 
-- **Race/Ethnicity**:
-  - Group A
-  - Group B
-  - Group C
-  - Group D
-  - Group E
+- **Chest Pain Type**:
+  - ATA
+  - NAP
+  - ASY
+  - TA
 
-- **Parental Level of Education** (Ordinal):
-  - High school
-  - Some high school
-  - Associate's degree
-  - Some college
-  - Bachelor's degree
-  - Master's degree
+- **Resting ECG**:
+  - Normal
+  - ST
+  - LVH
 
-- **Lunch**:
-  - Standard
-  - Free/Reduced
+- **Exercise Angina**:
+  - Yes
+  - No
 
-- **Test Preparation Course**:
-  - Completed
-  - None
-
+- **ST Slope**:
+  - Up
+  - Flat
+  - Down
 
 ## Deployment Link
-- [Deployment App]https://sureshbeekhani-studentexamperformanceprediction.hf.space/)
+- [Deployment App](https://sureshbeekhani-heartattackprediction.hf.space/)
 
 ## Screenshot of UI
 ![API Prediction](./templates/Prediction.jpg)
@@ -82,20 +81,22 @@ Link for YouTube Video: Click the thumbnail to open.
    - Save the preprocessor as a pickle file.
 
 3. **Model Training**:
-   - Test base models, finding CatBoost Regressor to be the best.
-   - Perform hyperparameter tuning on CatBoost and KNN models.
-   - Create a final VotingRegressor combining predictions from CatBoost, XGBoost, and KNN.
+   - Test various machine learning models, identifying the best performers.
+   - Conduct hyperparameter tuning on top models.
+   - Create a final ensemble model combining predictions from multiple algorithms.
    - Save the final model as a pickle file.
 
 4. **Prediction Pipeline**:
    - Convert input data into a DataFrame.
-   - Functions to load pickle files and predict final results.
+   - Implement functions to load pickle files and predict final results.
 
 5. **Flask App Creation**:
-   - Develop a Flask app with a user interface for predicting gemstone prices.
-  
-   - 
-## Additional Resources
-- **Exploratory Data Analysis (EDA) Notebook**: [Access EDA Notebook](./notebook/1.%20EDA%20STUDENT%20PERFORMANCE.ipynb)
-- **Model Training Notebook**: [Access Model Training Notebook](./notebook/2.%20MODEL%20TRAINING.ipynb)
+   - Develop a Flask app with a user-friendly interface for predicting heart attack risk.
 
+## Additional Resources
+- **Exploratory Data Analysis (EDA) Notebook**: [Access EDA Notebook](./notebook/1.%20EDA%20HEART%20PREDICTION.ipynb)
+- **Model Training Notebook**: [Access Model Training Notebook](./notebook/2.%20MODEL%20TRAINING%20HEART.ipynb)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
