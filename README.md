@@ -55,7 +55,7 @@ The categorical variables **Sex**, **Chest Pain Type**, **Resting ECG**, **Exerc
   - Down
 
 ## Deployment Link
-- [Deployment App](https://sureshbeekhani-heartattackprediction.hf.space/)
+- [Deployment App](https://sureshbeekhani-heart-attack-prediction.hf.space)
 
 ## Screenshot of UI
 ![API Prediction](./templates/Prediction.jpg)
