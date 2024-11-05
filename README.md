@@ -1,102 +1,101 @@
-# Heart Attack Prediction
+# Student Performance Indicator
 
 ## Project Overview
 
-The **Heart Attack Prediction** project is a machine learning application designed to predict the risk of heart attack based on various input factors. The tool estimates the risk using medical data such as age, sex, blood pressure, cholesterol levels, and other cardiovascular metrics.
+The **Student Performance Indicator** project is a machine learning application aimed at predicting and analyzing student performance in exams based on various demographic and socio-economic factors. This project investigates the impact of variables such as gender, ethnicity, parental education level, lunch type, and test preparation course participation on students' scores in math, reading, and writing.
 
-## Dataset Information
+## Project Workflow
 
-The dataset consists of the following features:
+1. **Understanding the Problem Statement**
+2. **Data Collection**
+3. **Data Validation**
+4. **Exploratory Data Analysis**
+5. **Data Preprocessing**
+6. **Model Training**
+7. **Model Selection**
 
-- **Sex**: Gender of the patient (Male/Female)
-- **Chest Pain Type**: Type of chest pain experienced (ATA, NAP, ASY, TA)
-- **Resting ECG**: Results of resting electrocardiographic measurements (Normal, ST, LVH)
-- **Exercise Angina**: Whether the patient experiences angina during exercise (Yes/No)
-- **ST Slope**: Slope of the peak exercise ST segment (Up, Flat, Down)
-- **Age**: Age of the patient (in years)
-- **Resting Blood Pressure**: Blood pressure (in mm Hg) at rest
-- **Cholesterol**: Cholesterol level (in mg/dl)
-- **Fasting Blood Sugar**: Blood sugar level (in mg/dl) after fasting
-- **Max Heart Rate**: Maximum heart rate achieved
-- **Oldpeak**: ST depression induced by exercise relative to rest
+## Problem Statement
 
-**Target Variable**:
-- **`Risk of Heart Attack`**: A binary indicator of heart attack risk.
+The objective of this project is to assess the influence of different factors on students' academic performance, measured through their test scores. The specific variables include:
+
+- **Gender**
+- **Ethnicity**
+- **Parental Level of Education**
+- **Lunch Program Type**
+- **Test Preparation Course Participation**
+
+Understanding these relationships can help educators and policymakers to develop strategies to improve academic outcomes.
+
+## Data Collection
 
 ### Dataset Source
-[Dataset Link](https://www.kaggle.com/datasets/your-dataset-link-here)
+The dataset can be accessed [here](https://www.kaggle.com/datasets/spscientist/students-performance-in-exams?datasetId=74977).
 
-## Categorical Variables
+### Dataset Description
 
-The categorical variables **Sex**, **Chest Pain Type**, **Resting ECG**, **Exercise Angina**, and **ST Slope** are essential for prediction.
+The dataset contains 8 columns and 1000 rows, with each row representing a student's test scores and various socio-demographic characteristics. Here’s a sample of the data:
 
-- **Sex**:
-  - Male
-  - Female
+| gender | race_ethnicity | parental_level_of_education | lunch       | test_preparation_course | math_score | reading_score | writing_score |
+|--------|-----------------|-----------------------------|-------------|-------------------------|------------|---------------|---------------|
+| female | group B        | bachelor's degree           | standard    | none                    | 72         | 72            | 74            |
+| female | group C        | some college                | standard    | completed               | 69         | 90            | 88            |
+| female | group B        | master's degree             | standard    | none                    | 90         | 95            | 93            |
+| male   | group A        | associate's degree          | free/reduced | none                   | 47         | 57            | 44            |
+| male   | group C        | some college                | standard    | none                    | 76         | 78            | 75            |
 
-- **Chest Pain Type**:
-  - ATA
-  - NAP
-  - ASY
-  - TA
+### Key Variables
 
-- **Resting ECG**:
-  - Normal
-  - ST
-  - LVH
-
-- **Exercise Angina**:
-  - Yes
-  - No
-
-- **ST Slope**:
-  - Up
-  - Flat
-  - Down
-
-## Deployment Link
-- [Deployment App](https://sureshbeekhani-heart-attack-prediction.hf.space)
-
-## Screenshot of UI
-![API Prediction](./templates/Prediction.jpg)
-
-## YouTube Video
-Link for YouTube Video: Click the thumbnail to open.
+- **Gender**: Gender of the student (male/female)
+- **Race/Ethnicity**: Ethnic group classification (e.g., Group A, Group B, etc.)
+- **Parental Level of Education**: Education level of the student’s parents (e.g., some college, bachelor's degree)
+- **Lunch**: Type of lunch program the student is enrolled in (standard or free/reduced)
+- **Test Preparation Course**: Whether the student completed a test preparation course (completed/none)
+- **Math Score**: Score in math test
+- **Reading Score**: Score in reading test
+- **Writing Score**: Score in writing test
 
 ## Project Approach
 
-1. **Data Ingestion**:
-   - Read data from CSV.
-   - Split the data into training and testing sets, saving them as CSV files.
+1. **Data Validation**:
+   - Check for data consistency, handle missing values, and ensure data types are accurate.
+   
+2. **Exploratory Data Analysis (EDA)**:
+   - Perform an analysis to identify trends, distributions, and correlations between factors and test scores.
+   - Evaluate how categorical features such as gender and ethnicity influence academic performance.
 
-2. **Data Transformation**:
-   - Create a ColumnTransformer pipeline.
-   - **For Numeric Variables**:
-     - Apply SimpleImputer with median strategy.
-     - Perform Standard Scaling.
-   - **For Categorical Variables**:
-     - Apply SimpleImputer with most frequent strategy.
-     - Perform ordinal encoding.
-     - Scale the data with Standard Scaler.
-   - Save the preprocessor as a pickle file.
+3. **Data Preprocessing**:
+   - Encode categorical variables, standardize numerical data, and prepare features for model input.
 
-3. **Model Training**:
-   - Test various machine learning models, identifying the best performers.
-   - Conduct hyperparameter tuning on top models.
-   - Create a final ensemble model combining predictions from multiple algorithms.
-   - Save the final model as a pickle file.
+4. **Model Training**:
+   - Train multiple machine learning models to predict exam scores based on the dataset features.
 
-4. **Prediction Pipeline**:
-   - Convert input data into a DataFrame.
-   - Implement functions to load pickle files and predict final results.
+5. **Model Selection**:
+   - Evaluate the performance of different models and select the best-performing model based on accuracy and other metrics.
 
-5. **Flask App Creation**:
-   - Develop a Flask app with a user-friendly interface for predicting heart attack risk.
+## Dependencies
 
-## Additional Resources
-- **Exploratory Data Analysis (EDA) Notebook**: [Access EDA Notebook](./notebook/1.%20EDA%20HEART%20PREDICTION.ipynb)
-- **Model Training Notebook**: [Access Model Training Notebook](./notebook/2.%20MODEL%20TRAINING%20HEART.ipynb)
+To run this project, ensure you have the following libraries installed:
 
-## License
+```bash
+pip install pandas numpy scikit-learn matplotlib seaborn
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+Project Structure
+├── data                    # Folder for dataset storage
+├── notebooks               # Folder for Jupyter notebooks (EDA and modeling)
+├── src                     # Source code for data preprocessing and modeling
+├── README.md               # Project overview and instructions
+└── requirements.txt        # List of dependencies
+
+Usage
+Data Preparation:
+
+Place the dataset in the data folder.
+Run the data validation and preprocessing steps provided in the Jupyter notebooks or scripts.
+Exploratory Data Analysis:
+
+Open the EDA notebook in the notebooks folder to analyze data trends and insights.
+Model Training and Evaluation:
+
+Use the modeling notebook or scripts to train, evaluate, and select the best model for predicting student performance.
+Conclusion
+This project offers insights into the factors that influence students' academic performance, which can be valuable for educators and policymakers in supporting students' educational outcomes.
