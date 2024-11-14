@@ -1,119 +1,120 @@
-import os
-import sys
-from dataclasses import dataclass
+# Import tools needed for working with files and machine learning
+import os  # Helps us save files
+import sys  # Helps us manage errors
+from dataclasses import dataclass  # Helps us set up simple settings
 
+# Import different types of models to test and see which one works best
 from catboost import CatBoostRegressor
 from sklearn.ensemble import (
     AdaBoostRegressor,
     GradientBoostingRegressor,
     RandomForestRegressor,
 )
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.tree import DecisionTreeRegressor
-from xgboost import XGBRegressor
+from sklearn.linear_model import LinearRegression  # A basic model to predict numbers
+from sklearn.metrics import r2_score  # Checks how well the model predicts
+from sklearn.tree import DecisionTreeRegressor  # A model that makes decisions step by step
+from xgboost import XGBRegressor  # Another model that can work well for many problems
 
-from src.exception import CustomException
-from src.logger import logging
+# Import custom tools to handle errors and keep track of program actions (logging)
+from src.exception import CustomException  # For handling special errors
+from src.logger import logging  # To keep a record of important actions
 
-from src.utils import save_object,evaluate_models
+# Import helper tools to save models and check how well they work
+from src.utils import save_object, evaluate_models
 
+# This part sets where to save the best model
 @dataclass
 class ModelTrainerConfig:
-    trained_model_file_path=os.path.join("artifacts","model.pkl")
+    trained_model_file_path = os.path.join("artifacts", "model.pkl")  # Folder to save the best model
 
+# Main class that finds the best model
 class ModelTrainer:
     def __init__(self):
-        self.model_trainer_config=ModelTrainerConfig()
+        # Set up the path for saving the model
+        self.model_trainer_config = ModelTrainerConfig()
 
-
-    def initiate_model_trainer(self,train_array,test_array):
+    # This function will train models and find the best one
+    def initiate_model_trainer(self, train_array, test_array):
         try:
-            logging.info("Split training and test input data")
-            X_train,y_train,X_test,y_test=(
-                train_array[:,:-1],
-                train_array[:,-1],
-                test_array[:,:-1],
-                test_array[:,-1]
+            # Record that we’re starting to split data into parts
+            logging.info("Splitting data into training and testing parts")
+
+            # Splitting data into input features (X) and target values (y)
+            # train_array and test_array have both inputs and answers
+            X_train, y_train, X_test, y_test = (
+                train_array[:, :-1],  # Input features for training (all columns except last)
+                train_array[:, -1],   # Target values (answers) for training (last column only)
+                test_array[:, :-1],   # Input features for testing
+                test_array[:, -1]     # Target values for testing
             )
+
+            # Set up different models to try out
             models = {
-                "Random Forest": RandomForestRegressor(),
-                "Decision Tree": DecisionTreeRegressor(),
-                "Gradient Boosting": GradientBoostingRegressor(),
-                "Linear Regression": LinearRegression(),
-                "XGBRegressor": XGBRegressor(),
-                "CatBoosting Regressor": CatBoostRegressor(verbose=False),
-                "AdaBoost Regressor": AdaBoostRegressor(),
+                "Random Forest": RandomForestRegressor(),  # Uses multiple trees to make decisions
+                "Decision Tree": DecisionTreeRegressor(),  # Simple model that splits data into smaller parts
+                "Gradient Boosting": GradientBoostingRegressor(),  # Uses many models to improve accuracy
+                "Linear Regression": LinearRegression(),  # Simple model for predicting numbers
+                "XGBRegressor": XGBRegressor(),  # Another strong model for structured data
+                "CatBoosting Regressor": CatBoostRegressor(verbose=False),  # Works well with different categories
+                "AdaBoost Regressor": AdaBoostRegressor(),  # Focuses on improving errors
             }
-            params={
+
+            # Settings for each model to help them perform better
+            params = {
                 "Decision Tree": {
-                    'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
-                    # 'splitter':['best','random'],
-                    # 'max_features':['sqrt','log2'],
+                    'criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],  # Ways to split data
                 },
-                "Random Forest":{
-                    # 'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
-                 
-                    # 'max_features':['sqrt','log2',None],
-                    'n_estimators': [8,16,32,64,128,256]
+                "Random Forest": {
+                    'n_estimators': [8, 16, 32, 64, 128, 256]  # Number of trees
                 },
-                "Gradient Boosting":{
-                    # 'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
-                    'learning_rate':[.1,.01,.05,.001],
-                    'subsample':[0.6,0.7,0.75,0.8,0.85,0.9],
-                    # 'criterion':['squared_error', 'friedman_mse'],
-                    # 'max_features':['auto','sqrt','log2'],
-                    'n_estimators': [8,16,32,64,128,256]
+                "Gradient Boosting": {
+                    'learning_rate': [.1, .01, .05, .001],  # How fast the model learns
+                    'subsample': [0.6, 0.7, 0.75, 0.8, 0.85, 0.9],  # Portion of data used each time
+                    'n_estimators': [8, 16, 32, 64, 128, 256]  # Number of small models used
                 },
-                "Linear Regression":{},
-                "XGBRegressor":{
-                    'learning_rate':[.1,.01,.05,.001],
-                    'n_estimators': [8,16,32,64,128,256]
+                "Linear Regression": {},  # No extra settings needed
+                "XGBRegressor": {
+                    'learning_rate': [.1, .01, .05, .001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
                 },
-                "CatBoosting Regressor":{
-                    'depth': [6,8,10],
+                "CatBoosting Regressor": {
+                    'depth': [6, 8, 10],  # How deep each tree goes
                     'learning_rate': [0.01, 0.05, 0.1],
                     'iterations': [30, 50, 100]
                 },
-                "AdaBoost Regressor":{
-                    'learning_rate':[.1,.01,0.5,.001],
-                    # 'loss':['linear','square','exponential'],
-                    'n_estimators': [8,16,32,64,128,256]
+                "AdaBoost Regressor": {
+                    'learning_rate': [.1, .01, 0.5, .001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
                 }
-                
             }
 
-            model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
-                                             models=models,param=params)
-            
-            ## To get best model score from dict
-            best_model_score = max(sorted(model_report.values()))
+            # This function tries each model and returns their scores (how well they work)
+            model_report: dict = evaluate_models(
+                X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
+                models=models, param=params
+            )
 
-            ## To get best model name from dict
+            # Find the highest score and the model name for that score
+            best_model_score = max(model_report.values())  # Best score
+            best_model_name = list(model_report.keys())[list(model_report.values()).index(best_model_score)]  # Model name
+            best_model = models[best_model_name]  # Best model itself
 
-            best_model_name = list(model_report.keys())[
-                list(model_report.values()).index(best_model_score)
-            ]
-            best_model = models[best_model_name]
+            # If no model has a score over 0.6, show an error
+            if best_model_score < 0.6:
+                raise CustomException("No suitable model found with the required performance.")
+            logging.info("Best model chosen based on training and testing data")
 
-            if best_model_score<0.6:
-                raise CustomException("No best model found")
-            logging.info(f"Best found model on both training and testing dataset")
-
+            # Save the best model to a file so it can be reused later
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
                 obj=best_model
             )
 
-            predicted=best_model.predict(X_test)
+            # Use the best model to make predictions on test data and calculate the accuracy score (R²)
+            predicted = best_model.predict(X_test)  # Predictions on test data
+            r2_square = r2_score(y_test, predicted)  # Check how close predictions are to real answers
+            return r2_square  # Return the accuracy score for the best model
 
-            r2_square = r2_score(y_test, predicted)
-            return r2_square
-            
-
-
-
-            
         except Exception as e:
-            raise CustomException(e,sys)
+            # If any error happens, raise a custom error message
+            raise CustomException(e, sys)
