@@ -1,80 +1,81 @@
-# Import necessary libraries and modules
-import os  # For file and directory operations
-import sys  # For system-specific parameters and functions
-from ..exception import CustomException
+# Import necessary tools and helpers
+import os  # Used for handling files and folders
+import sys  # Used for system-level actions, like error handling
+from ..exception import CustomException  # Custom error handling
 
-from src.logger import logging  # Adjusted to absolute import
+from src.logger import logging  # For tracking messages and events
 
-import pandas as pd  # For data manipulation and analysis
+import pandas as pd  # For working with data, like reading and organizing it
 
-from sklearn.model_selection import train_test_split  # For splitting data into training and testing sets
-from dataclasses import dataclass  # For creating data classes
+from sklearn.model_selection import train_test_split  # To split data into parts for training and testing
+from dataclasses import dataclass  # A simpler way to create classes for storing settings and information
 
-#Import components for data transformation and model training
-from src.components.data_transformation import DataTransformation  # Data transformation class
-from src.components.data_transformation import DataTransformationConfig  # Configuration for data transformation
-from src.components.model_trainer import ModelTrainerConfig  # Configuration for model training
-from src.components.model_trainer import ModelTrainer  # Model training class
+# Import components for changing data and training the model
+from src.components.data_transformation import DataTransformation  # Helps with preparing data
+from src.components.data_transformation import DataTransformationConfig  # Settings for data preparation
+from src.components.model_trainer import ModelTrainerConfig  # Settings for training
+from src.components.model_trainer import ModelTrainer  # Trains the model
 
-# Define a data class for Data Ingestion Configuration
+# Setting up where to save data for different steps in the process
 @dataclass
 class DataIngestionConfig:
-    # Specify file paths for training, testing, and raw data
+    # Paths for where training, testing, and the original data files will be saved
     train_data_path: str = os.path.join('artifacts', "train.csv")
     test_data_path: str = os.path.join('artifacts', "test.csv")
     raw_data_path: str = os.path.join('artifacts', "data.csv")
 
-# Data Ingestion Class Definition
+# Class for bringing data into the project
 class DataIngestion:
     def __init__(self):
-        # Initialize ingestion configuration
+        # Sets up paths for saving data files
         self.ingestion_config = DataIngestionConfig()
 
-    # Method to initiate data ingestion
+    # Method to start the data loading process
     def initiate_data_ingestion(self):
-        logging.info("Entered the data ingestion method or component")
+        logging.info("Starting the data loading process")
         try:
-            # Read the dataset from the specified path
-            df = pd.read_csv('notebook/data/stud.csv')  # Update path based on your directory structure
-            logging.info('Read the dataset as dataframe')
+            # Reads the data from a file
+            df = pd.read_csv('notebook/data/stud.csv')  # Adjust path as needed
+            logging.info('Data has been read and loaded')
 
-            # Create necessary directories if they do not exist
+            # Creates folders if they don’t exist already
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
 
-            # Save the raw data to CSV
+            # Saves the original data for reference
             df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
 
-            logging.info("Train test split initiated")
-            # Split the data into training and testing sets
+            logging.info("Splitting data for training and testing")
+            # Divides the data into parts: one for training, one for testing
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
 
-            # Save the training and testing sets to CSV
+            # Saves the split data into separate files
             train_set.to_csv(self.ingestion_config.train_data_path, index=False, header=True)
             test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
 
-            logging.info("Ingestion of the data is completed")
+            logging.info("Data loading process completed")
 
-            # Return the paths of the train and test data
+            # Returns the file paths for the training and testing data
             return (
                 self.ingestion_config.train_data_path,
                 self.ingestion_config.test_data_path
             )
         except Exception as e:
-            raise CustomException(e, sys)  # Raise custom exception on error
+            # Handles errors and provides a message if something goes wrong
+            raise CustomException(e, sys)
 
-# Main block to execute the data ingestion process
+# Main part of the code to run the data loading and model training steps
 if __name__ == "__main__":
-    # Create an instance of DataIngestion
+    # Start data loading
     obj = DataIngestion()
-    # Initiate data ingestion and get train and test data paths
+    # Run the data loading and get paths to the saved data files
     train_data, test_data = obj.initiate_data_ingestion()
 
-    # Create an instance of DataTransformation
+    # Start data preparation
     data_transformation = DataTransformation()
-    # Perform data transformation and obtain training and testing arrays
+    # Transform the data to get it ready for training
     train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
 
-    # Create an instance of ModelTrainer
+    # Start model training
     modeltrainer = ModelTrainer()
-    # Train the model and print the result
+    # Train the model and print the outcome
     print(modeltrainer.initiate_model_trainer(train_arr, test_arr))
